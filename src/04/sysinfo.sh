@@ -17,7 +17,7 @@ SPACE_ROOT=$(df /root/ | grep "\/$" | awk '{printf ("%.2f Mb\n", $2/1024)}')
 SPACE_ROOT_USED=$(df /root/ | grep "\/$" | awk '{printf ("%.2f Mb\n", $3/1024)}')
 SPACE_ROOT_FREE=$(df /root/ | grep "\/$" | awk '{printf ("SPACE_ROOT_FREE = %.2f Mb\n", $4/1024)}')
 
-function check_args {
+function run {
     if [[ $NUM_ARGS -eq 4 ]]; then
         reg="^[1-6]$"
         if [[ $ARG1 =~ $reg ]] && [[ $ARG2 =~ $reg ]] && [[ $ARG3 =~ $reg ]] && [[ $ARG4 =~ $reg ]]; then
@@ -57,39 +57,25 @@ function num_to_text {
     c_name="default"
     c_num="$1"
     case "$1" in
-        7) c_name="white" ;;
-        1) c_name="red" ;;
-        2) c_name="green" ;;
+        1) c_name="white" ;;
+        2) c_name="red" ;;
+        3) c_name="green" ;;
         4) c_name="blue" ;;
         5) c_name="purple" ;;
-        0) c_name="black" ;;
+        6) c_name="black" ;;
     esac
     
-    if [[ $2 -eq 1 ]] && [[ $c_name -eq "black" ]]; then
+    if [[ $2 == 1 ]] && [[ $c_name == "black" ]]; then
         c_num="default"
-    elif [[ $2 -eq 2 ]] && [[ $c_name -eq "white" ]]; then
+    elif [[ $2 == 2 ]] && [[ $c_name == "white" ]]; then
         c_num="default"
-    elif [[ $2 -eq 3 ]] && [[ $c_name -eq "red" ]]; then
+    elif [[ $2 == 3 ]] && [[ $c_name == "red" ]]; then
         c_num="default"
-    elif [[ $2 -eq 4 ]] && [[ $c_name -eq "purple" ]]; then
+    elif [[ $2 == 4 ]] && [[ $c_name == "blue" ]]; then
         c_num="default"
     fi
 
-    echo "$C_num ($c_name)"
-}
-
-function num_to_num {
-        res="default"
-    case "$1" in
-        7) res=1 ;;
-        1) res=2 ;;
-        2) res=3 ;;
-        4) res=4 ;;
-        5) res=5 ;;
-        0) res=6 ;;
-    esac
-
-    echo $res
+    echo "$c_num ($c_name)"
 }
 
 function info_echo {

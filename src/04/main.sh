@@ -10,7 +10,7 @@ export ARG2=$column1_font_color
 export ARG3=$column2_background
 export ARG4=$column2_font_color
 
-check_args
+run
 
 export -n NUM_ARGS
 export -n ARG1
