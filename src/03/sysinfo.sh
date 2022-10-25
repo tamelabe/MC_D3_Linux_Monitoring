@@ -17,21 +17,57 @@ SPACE_ROOT=$(df /root/ | grep "\/$" | awk '{printf ("%.2f Mb\n", $2/1024)}')
 SPACE_ROOT_USED=$(df /root/ | grep "\/$" | awk '{printf ("%.2f Mb\n", $3/1024)}')
 SPACE_ROOT_FREE=$(df /root/ | grep "\/$" | awk '{printf ("SPACE_ROOT_FREE = %.2f Mb\n", $4/1024)}')
 
+function check_args {
+    if [[ $NUM_ARGS -eq 4 ]]; then
+        reg="^[1-6]$"
+        if [[ $ARG1 =~ $reg ]] && [[ $ARG2 =~ $reg ]] && [[ $ARG3 =~ $reg ]] && [[ $ARG4 =~ $reg ]]; then
+            if [[ $ARG1 -ne $ARG2 ]] && [[ $ARG3 -ne $ARG4 ]]; then
+                bg_v_names="\033[4$(color_convertion $ARG1)m"
+                fc_v_names="\033[3$(color_convertion $ARG2)m"
+                bg_v="\033[4$(color_convertion $ARG3)m"
+                fc_v="\033[3$(color_convertion $ARG4)m"
+                def_clr="\033[37m\033[0m"
+                info_echo
+            else
+                echo "Background and font colors should'n be equal. Please type diff [1-2] and [3-4] args."
+            fi
+        else
+            echo "Args should be a numbers [1-6]."
+        fi
+    else
+        echo "Please type 4 color parameters."
+    fi
+}
+
+function color_convertion {
+    res=0
+    case "$1" in
+        1) res=7 ;;
+        2) res=1 ;;
+        3) res=2 ;;
+        4) res=4 ;;
+        5) res=5 ;;
+        6) res=0 ;;
+    esac
+
+    echo $res
+}
+
 function info_echo {
-    echo "HOSTNAME = $HOSTNAME"
-    echo "TIMEZONE = $TIMEZONE"
-    echo "USER = $USER"
-    echo "OS = $OS"
-    echo "DATE = $DATE"
-    echo "UPTIME = $UPTIME"
-    echo "UPTIME_SEC = $UPTIME_SEC"
-    echo "IP = $IP"
-    echo "MASK = $MASK"
-    echo "GATEWAY = $GATEWAY"
-    echo "RAM_TOTAL = $RAM_TOTAL"
-    echo "RAM_USED = $RAM_USED"
-    echo "RAM_FREE = $RAM_FREE"
-    echo "SPACE_ROOT = $SPACE_ROOT"
-    echo "SPACE_ROOT_USED = $SPACE_ROOT_USED"
-    echo "SPACE_ROOT_FREE = $SPACE_ROOT_FREE"
+    echo -e "${bg_v_names}${fc_v_names}HOSTNAME${def_clr} = ${bg_v}${fc_v}$HOSTNAME${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}TIMEZONE${def_clr} = ${bg_v}${fc_v}$TIMEZONE${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}USER${def_clr} = ${bg_v}${fc_v}$USER${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}OS${def_clr} = ${bg_v}${fc_v}$OS${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}DATE${def_clr} = ${bg_v}${fc_v}$DATE${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}UPTIME${def_clr} = ${bg_v}${fc_v}$UPTIME${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}UPTIME_SEC${def_clr} = ${bg_v}${fc_v}$UPTIME_SEC${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}IP${def_clr} = ${bg_v}${fc_v}$IP${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}MASK${def_clr} = ${bg_v}${fc_v}$MASK${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}GATEWAY${def_clr} = ${bg_v}${fc_v}$GATEWAY${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}RAM_TOTAL${def_clr} = ${bg_v}${fc_v}$RAM_TOTAL${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}RAM_USED${def_clr} = ${bg_v}${fc_v}$RAM_USED${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}RAM_FREE${def_clr} = ${bg_v}${fc_v}$RAM_FREE${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}SPACE_ROOT${def_clr} = ${bg_v}${fc_v}$SPACE_ROOT${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}SPACE_ROOT_USED${def_clr} = ${bg_v}${fc_v}$SPACE_ROOT_USED${def_clr}"
+    echo -e "${bg_v_names}${fc_v_names}SPACE_ROOT_FREE${def_clr} = ${bg_v}${fc_v}$SPACE_ROOT_FREE${def_clr}"
 }
