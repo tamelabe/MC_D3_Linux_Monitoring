@@ -4,4 +4,3 @@
 chmod +x sysinfo.sh
 
 info_echo
-question
