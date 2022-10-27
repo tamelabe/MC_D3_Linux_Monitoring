@@ -25,7 +25,7 @@ function diff_files_count {
 
 function top10_files {
     echo "TOP 10 files of maximum size arranged in descending order (path, size and type):"
-    find $1 -type f -exec du -h {} + | sort -hr | head | awk '{printf "%d - %s, %s", NR, $2, $1; if (match($2, /[ -.0-~]\.[ -.0-~]+/)) printf ", %s\n", substr($2,RSTART+2,RLENGTH); else printf "\n"}'
+    find $1 -type f -exec du -h {} + | sort -hr | head | awk '{printf "%d - %s, %s", NR, $2, $1; if (match($2, "[^./]+$")) printf ", %s\n", substr($2,RSTART,RLENGTH); else printf "\n"}'
 }
 
 function top10_exec_files {
@@ -39,5 +39,5 @@ function top10_exec_files {
 
 function run_time {
     time_exit=`date +%s`
-    echo "Script execution time (in seconds) = $((time_exit-$1))"
+    echo "Script execution time (in seconds) = $(($time_exit-$1))"
 }
