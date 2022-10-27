@@ -31,10 +31,10 @@ function top10_files {
 function top10_exec_files {
     echo "TOP 10 executable files of the maximum size arranged in descending order (path, size and MD5 hash of file):"
     find $1 -type f -executable -exec du -h {} + | sort -hr | head > info.tmp
-    awk '{system("md5sum " $2)}' info.tmp | awk '{print $1}' > hashes.tmp
-    awk '{printf "%d - %s, %s, \n", NR, $2, $1}' info.tmp > info_style.tmp
-    awk 'FNR==NR {a[NR]=$1; next} {$5=a[FNR]}1' hashes.tmp info_style.tmp
-    rm info.tmp info_style.tmp hashes.tmp
+    awk '{system("md5sum " $2)}' info.tmp | awk '{print $1}' > md5.tmp
+    awk '{printf "%d - %s, %s, \n", NR, $2, $1}' info.tmp > info_pretty.tmp
+    awk 'FNR==NR {a[NR]=$1; next} {$5=a[FNR]}1' md5.tmp info_pretty.tmp
+    rm info.tmp info_pretty.tmp md5.tmp
 }
 
 function run_time {
